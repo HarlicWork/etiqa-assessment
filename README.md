@@ -2,7 +2,7 @@
 
 This is for Assessment Purpose:
 
-Clone or Download the app for
+Clone or Download the repo for
 
 1) Client (Frontend)
 2) Server (API)
