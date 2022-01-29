@@ -1,1 +1,47 @@
+<mat-accordion *ngIf="users.length >= 0">
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+      <div>
+        <label class="mat-subheading-2">{{ user.email }}</label>
+      </div>
+    </mat-expansion-panel-header>
+    <div>
+      <label class="mat-title">User Name:</label>
+      <p class="mat-subheading-2">{{ user.userName }}</p>
+    </div>
+    <div>
+      <label class="mat-title">Phone:</label>
+      <p class="mat-subheading-2">{{ user.phoneNumber }}</p>
+    </div>
+    <div>
+      <label class="mat-title">Skillsets:</label>
+      <mat-list role="list">
+        <mat-list-item
+          role="listitem"
+          class="mat-subheading-2"
+          *ngFor="let skill of user.skillsets"
+          >{{ skill.name }}</mat-list-item
+        >
+      </mat-list>
+    </div>
+    <div>
+      <label class="mat-title">Hobbies:</label>
+      <mat-list role="list">
+        <mat-list-item
+          role="listitem"
+          class="mat-subheading-2"
+          *ngFor="let hobby of user.hobbies"
+          >{{ hobby.name }}</mat-list-item
+        >
+      </mat-list>
+    </div>
+    <div>
+      <button mat-raised-button color="accent">Edit</button>
+      <button mat-raised-button color="warn">Delete</button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
 
+<p class="text-info mat-body-1" *ngIf="users.length <= 0">
+  No user in the lists
+</p>
