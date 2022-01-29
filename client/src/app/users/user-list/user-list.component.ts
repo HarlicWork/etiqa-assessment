@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserListComponent implements OnInit, OnDestroy {
   users: User[] = [];
+  isLoading = false;
   private usersSub: Subscription;
 
   constructor(public userService: UserService) {}
@@ -19,10 +20,12 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.userService.getUsers();
     this.usersSub = this.userService
       .getUserUpdateListener()
       .subscribe((usr: User[]) => {
+        this.isLoading = false;
         this.users = usr;
       });
   }

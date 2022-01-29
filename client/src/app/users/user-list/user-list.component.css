@@ -11,3 +11,7 @@ button {
   text-align: center;
   color: red;
 }
+
+mat-spinner {
+  margin: auto;
+}

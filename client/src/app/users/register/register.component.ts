@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   private mode = 'register';
   private userId: string;
+  isLoading = false;
 
   enteredUserName = '';
   enteredPassword = '';
@@ -40,7 +41,9 @@ export class RegisterComponent implements OnInit {
       if (paramMap.has('userId')) {
         this.mode = 'edit';
         this.userId = paramMap.get('userId');
+        this.isLoading = true;
         this.user = this.userService.getUser(this.userId);
+        this.isLoading = false;
       } else {
         this.mode = 'register';
         this.userId = null;
@@ -52,7 +55,7 @@ export class RegisterComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-
+    this.isLoading = true;
     const userData: User = {
       id: null,
       email: form.value.email,
@@ -73,7 +76,7 @@ export class RegisterComponent implements OnInit {
         form.value.name,
         form.value.phone,
         this.enteredSkillSets,
-        this.enteredHobbies,
+        this.enteredHobbies
       );
     }
 
