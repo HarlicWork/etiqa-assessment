@@ -13,7 +13,6 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    // return [...this.users];
     this.http
       .get<{ users: any }>('http://localhost:3000/api/users')
       .pipe(
@@ -52,9 +51,25 @@ export class UserService {
       hobbies: newUser.hobbies,
     };
     this.http
-      .post<{ users: User[] }>('http://localhost:3000/api/users/signup', user)
+      .post<{ postId: string; users: User[] }>(
+        'http://localhost:3000/api/users/signup',
+        user
+      )
       .subscribe((result) => {
+        const id = result.postId;
+        console.log(id);
+        user.id = id;
         this.users.push(user);
+        this.usersUpdated.next([...this.users]);
+      });
+  }
+
+  deleteUser(userId: string) {
+    this.http
+      .delete('http://localhost:3000/api/users/' + userId)
+      .subscribe(() => {
+        const updateUserList = this.users.filter((user) => user.id !== userId);
+        this.users = updateUserList;
         this.usersUpdated.next([...this.users]);
       });
   }

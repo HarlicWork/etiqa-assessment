@@ -105,11 +105,12 @@ exports.users_signup = async (req, res, next) => {
           createdAt: new Date().toISOString(),
         });
 
-        // save user credential in db
-        const result = newUser.save();
-        console.log(result);
-        res.status(201).json({
-          message: 'User successfully created',
+        // save user credential in db then pass user id
+        newUser.save().then((result) => {
+          res.status(201).json({
+            message: 'User successfully created',
+            postId: result._id,
+          });
         });
       }
     });
@@ -139,6 +140,7 @@ exports.users_login = async (req, res, next) => {
       }
     }
   } catch (err) {
+    // error handler
     const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
@@ -168,20 +170,18 @@ exports.users_logout = (req, res, next) => {
   });
 };
 
-exports.users_delete = (req, res, next) => {
+exports.users_delete = async (req, res, next) => {
   const { userId } = req.params;
 
-  User.remove({ _id: userId })
-    .exec()
-    .then((result) => {
-      res.status(200).json({
-        message: 'User successfully deleted',
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        error: err,
-      });
+  try {
+    const result = await User.deleteOne({ _id: userId });
+    res.status(200).json({
+      message: 'User successfully deleted',
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: err,
+    });
+  }
 };

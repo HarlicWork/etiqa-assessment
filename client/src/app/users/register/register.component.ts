@@ -47,7 +47,6 @@ export class RegisterComponent {
     };
 
     this.userService.addUser(userData);
-    console.log(userData);
     form.reset();
   }
 
