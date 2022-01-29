@@ -7,7 +7,11 @@ Clone or Download the repo for
 1) Client (Frontend)
 2) Server (API)
 
-Run both folder with 
+Navigate to both client & server folder and run each
+
+### `npm install`
+
+then
 
 ### `npm start`
 
@@ -19,7 +23,7 @@ PORT=3000
 ```
 
 
-The app is running with basic CRUD. However, im stuck in Edit user function due to Angular complex state.
+The app is running with basic CRUD. However, im stuck in Edit user function due to Angular complex conditional state concept (React is easier to understand...lol).
 
 Enjoy!
 
