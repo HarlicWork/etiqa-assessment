@@ -47,11 +47,8 @@ const handleErrors = (err) => {
 
 exports.user_get_all = async (req, res, next) => {
   try {
-    const users = await User.find().sort({ userName: 1 }).select({
-      userName: 1,
-      email: 1,
-    });
-    res.status(200).json({ count: users.length, users });
+    const users = await User.find().sort({ userName: 1 });
+    res.status(200).json({ users });
   } catch (err) {
     return res.status(500).json({
       error: err,
@@ -78,7 +75,8 @@ exports.user_get_by_id = async (req, res, next) => {
 };
 
 exports.users_signup = async (req, res, next) => {
-  const { userName, email, password, phoneNumber, skillsets, hobby } = req.body;
+  const { userName, email, password, phoneNumber, skillsets, hobbies } =
+    req.body;
 
   try {
     // check user
@@ -101,11 +99,12 @@ exports.users_signup = async (req, res, next) => {
           userName,
           email,
           phoneNumber,
-          skillsets,
-          hobby,
+          skillsets: skillsets,
+          hobbies: hobbies,
           password: hash,
           createdAt: new Date().toISOString(),
         });
+
         // save user credential in db
         const result = newUser.save();
         console.log(result);

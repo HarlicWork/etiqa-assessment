@@ -17,8 +17,8 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  skillsets: { name: [String] },
-  hobby: { name: [String] },
+  skillsets: [String],
+  hobbies: [String],
   password: { type: String, required: true },
   createdAt: { type: Date },
 });

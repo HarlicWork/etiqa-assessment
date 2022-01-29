@@ -37,6 +37,7 @@ export class RegisterComponent {
     }
 
     const userData: User = {
+      id: null,
       email: form.value.email,
       password: form.value.password,
       userName: form.value.name,
