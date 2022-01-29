@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
@@ -7,35 +8,22 @@ import { UserService } from '../../services/user.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
 })
-export class UserListComponent {
-  @Input() users: User[] = [];
+export class UserListComponent implements OnInit, OnDestroy {
+  users: User[] = [];
+  private usersSub: Subscription;
 
   constructor(public userService: UserService) {}
 
-  // Dummy Data for test
-  //   users = {
-  //     userName: 'Mario',
-  //     email: 'mario@dev.com',
-  //     password: 'abc123',
-  //     phoneNumber: '0123456789',
-  //     skillsets: [{ name: 'angular' }, { name: 'MongoDB' }],
-  //     hobbies: [{ name: 'futsal' }, { name: 'gaming' }],
-  //   },
-  //   {
-  //     userName: 'Luigi',
-  //     email: 'luigi@dev.com',
-  //     password: 'abc123',
-  //     phoneNumber: '0123456789',
-  //     skillsets: [{ name: 'react' }, { name: 'Firebase' }],
-  //     hobbies: [{ name: 'badminton' }, { name: 'travelling' }],
-  //   },
-  //   {
-  //     userName: 'Bowser',
-  //     email: 'bowser@dev.com',
-  //     password: 'abc123',
-  //     phoneNumber: '0123456789',
-  //     skillsets: [{ name: 'vue' }, { name: 'MySQL' }],
-  //     hobbies: [{ name: 'cooking' }, { name: 'eating' }],
-  //   },
-  // ];
+  ngOnInit() {
+    this.users = this.userService.getUsers();
+    this.usersSub = this.userService
+      .getUserUpdateListener()
+      .subscribe((usr: User[]) => {
+        this.users = usr;
+      });
+  }
+
+  ngOnDestroy() {
+    this.usersSub.unsubscribe();
+  }
 }

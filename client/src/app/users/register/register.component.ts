@@ -1,7 +1,8 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { UserService } from '../../services/user.service';
 
 import { User } from '../../models/user.model';
 export interface Skillset {
@@ -27,7 +28,8 @@ export class RegisterComponent {
   enteredPhone = '';
   enteredSkillSets: Skillset[] = [{ name: 'Angular' }, { name: 'MongoDB' }];
   enteredHobbies: Hobbies[] = [{ name: 'Travel' }];
-  @Output() userCreated = new EventEmitter();
+
+  constructor(public userService: UserService) {}
 
   onRegisterHandler(form: NgForm) {
     if (form.invalid) {
@@ -43,8 +45,9 @@ export class RegisterComponent {
       hobbies: this.enteredHobbies,
     };
 
-    this.userCreated.emit(userData);
+    this.userService.addUser(userData);
     console.log(userData);
+    form.reset();
   }
 
   addSkills(event: MatChipInputEvent): void {
