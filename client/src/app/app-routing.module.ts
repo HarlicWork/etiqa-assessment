@@ -4,8 +4,9 @@ import { RegisterComponent } from './users/register/register.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 
 const routes: Routes = [
-  { path: 'userList', component: UserListComponent },
-  { path: '', component: RegisterComponent },
+  { path: '', component: UserListComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'edit/:userId', component: RegisterComponent },
 ];
 
 @NgModule({

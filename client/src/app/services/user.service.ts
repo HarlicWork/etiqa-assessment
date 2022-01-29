@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
+import { Skillset, Hobbies } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -40,6 +41,10 @@ export class UserService {
     return this.usersUpdated.asObservable();
   }
 
+  getUser(id: string) {
+    return { ...this.users.find((u) => u.id === id) };
+  }
+
   addUser(newUser: User) {
     const user: User = {
       id: null,
@@ -57,9 +62,37 @@ export class UserService {
       )
       .subscribe((result) => {
         const id = result.postId;
-        // set user id when create 
+        // set user id when create
         user.id = id;
         this.users.push(user);
+        this.usersUpdated.next([...this.users]);
+      });
+  }
+
+  updateUser(
+    id: string,
+    userName: string,
+    email: string,
+    password: string,
+    phoneNumber: string,
+    skillsets: Skillset[],
+    hobbies: Hobbies[]
+  ) {
+    const user: User = {
+      id: id,
+      userName: userName,
+      email: email,
+      password: password,
+      phoneNumber: phoneNumber,
+      skillsets: skillsets,
+      hobbies: hobbies,
+    };
+    this.http
+      .put('http://localhost:3000/api/users/update/' + id, user)
+      .subscribe((response) => {
+        const updateUsers = [...this.users];
+        const oldUserIndex = updateUsers.findIndex((u) => u.id === user.id);
+        updateUsers[oldUserIndex] = user;
         this.usersUpdated.next([...this.users]);
       });
   }

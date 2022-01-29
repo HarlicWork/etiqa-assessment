@@ -4,10 +4,10 @@
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input
-        type="email"
         matInput
+        type="email"
         name="email"
-        ngModel
+        [ngModel]="user?.email"
         placeholder="yourEmail@dev.com"
         required
         #email="ngModel"
@@ -21,7 +21,7 @@
           type="password"
           matInput
           name="password"
-          ngModel
+          [ngModel]="user?.password"
           required
           #password="ngModel"
         />
@@ -35,7 +35,7 @@
           type="text"
           matInput
           name="name"
-          ngModel
+          [ngModel]="user?.userName"
           placeholder="Enter your name..."
           required
           #name="ngModel"
@@ -49,7 +49,7 @@
         <input
           type="text"
           matInput
-          ngModel
+          [ngModel]="user?.phoneNumber"
           name="phone"
           placeholder="Enter phone number..."
           required

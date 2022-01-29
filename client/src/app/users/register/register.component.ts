@@ -1,8 +1,9 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { UserService } from '../../services/user.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { User } from '../../models/user.model';
 export interface Skillset {
@@ -18,9 +19,12 @@ export interface Hobbies {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   addOnBlur = true;
+  user: User;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  private mode = 'register';
+  private userId: string;
 
   enteredUserName = '';
   enteredPassword = '';
@@ -29,7 +33,20 @@ export class RegisterComponent {
   enteredSkillSets: Skillset[] = [{ name: 'Angular' }, { name: 'MongoDB' }];
   enteredHobbies: Hobbies[] = [{ name: 'Travel' }];
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, public route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('userId')) {
+        this.mode = 'edit';
+        this.userId = paramMap.get('userId');
+        this.user = this.userService.getUser(this.userId);
+      } else {
+        this.mode = 'register';
+        this.userId = null;
+      }
+    });
+  }
 
   onRegisterHandler(form: NgForm) {
     if (form.invalid) {
@@ -46,7 +63,20 @@ export class RegisterComponent {
       hobbies: this.enteredHobbies,
     };
 
-    this.userService.addUser(userData);
+    if (this.mode === 'register') {
+      this.userService.addUser(userData);
+    } else {
+      this.userService.updateUser(
+        this.userId,
+        form.value.email,
+        form.value.password,
+        form.value.name,
+        form.value.phone,
+        this.enteredSkillSets,
+        this.enteredHobbies,
+      );
+    }
+
     form.reset();
   }
 

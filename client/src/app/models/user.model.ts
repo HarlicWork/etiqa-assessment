@@ -8,10 +8,10 @@ export interface User {
   hobbies: Hobbies[];
 }
 
-interface Skillset {
+export interface Skillset {
   name: string;
 }
 
-interface Hobbies {
+export interface Hobbies {
   name: string;
 }
