@@ -57,7 +57,7 @@ export class UserService {
       )
       .subscribe((result) => {
         const id = result.postId;
-        console.log(id);
+        // set user id when create 
         user.id = id;
         this.users.push(user);
         this.usersUpdated.next([...this.users]);
