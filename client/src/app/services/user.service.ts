@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 
@@ -14,9 +15,24 @@ export class UserService {
   getUsers() {
     // return [...this.users];
     this.http
-      .get<{ users: User[] }>('http://localhost:3000/api/users')
+      .get<{ users: any }>('http://localhost:3000/api/users')
+      .pipe(
+        map((userData) => {
+          return userData.users.map((user) => {
+            return {
+              id: user._id,
+              email: user.email,
+              password: user.password,
+              userName: user.userName,
+              phoneNumber: user.phoneNumber,
+              skillsets: user.skillsets,
+              hobbies: user.hobbies,
+            };
+          });
+        })
+      )
       .subscribe((userData) => {
-        this.users = userData.users;
+        this.users = userData;
         this.usersUpdated.next([...this.users]);
       });
   }
