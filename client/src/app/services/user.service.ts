@@ -18,7 +18,6 @@ export class UserService {
       .subscribe((userData) => {
         this.users = userData.users;
         this.usersUpdated.next([...this.users]);
-        console.log(this.users[0]);
       });
   }
 
@@ -28,7 +27,7 @@ export class UserService {
 
   addUser(newUser: User) {
     const user: User = {
-      id: newUser.id,
+      id: null,
       email: newUser.email,
       password: newUser.password,
       userName: newUser.userName,
@@ -36,8 +35,11 @@ export class UserService {
       skillsets: newUser.skillsets,
       hobbies: newUser.hobbies,
     };
-
-    this.users.push(user);
-    this.usersUpdated.next([...this.users]);
+    this.http
+      .post<{ users: User[] }>('http://localhost:3000/api/users/signup', user)
+      .subscribe((result) => {
+        this.users.push(user);
+        this.usersUpdated.next([...this.users]);
+      });
   }
 }

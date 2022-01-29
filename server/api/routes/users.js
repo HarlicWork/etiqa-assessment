@@ -16,6 +16,6 @@ router.put('/update/:id', usersController.users_update);
 
 router.post('/logout', usersController.users_logout);
 
-router.delete('/:userId', checkAuth, usersController.users_delete);
+router.delete('/:userId', usersController.users_delete);
 
 module.exports = router;
