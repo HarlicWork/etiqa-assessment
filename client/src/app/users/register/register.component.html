@@ -1,92 +1,112 @@
 <mat-card>
   <h2>Register</h2>
-  <div>
+  <form (submit)="onRegisterHandler(registerForm)" #registerForm="ngForm">
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input
         type="email"
         matInput
-        [(ngModel)]="enteredEmail"
+        name="email"
+        ngModel
         placeholder="yourEmail@dev.com"
+        required
+        #email="ngModel"
       />
+      <mat-error *ngIf="email.invalid">Please enter email.</mat-error>
     </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input type="password" matInput [(ngModel)]="enteredPassword" />
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input
-        type="text"
-        matInput
-        [(ngModel)]="enteredUserName"
-        placeholder="Enter your name..."
-      />
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-label>Phone</mat-label>
-      <input
-        type="text"
-        matInput
-        [(ngModel)]="enteredPhone"
-        placeholder="Enter your name..."
-      />
-    </mat-form-field>
-  </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          name="password"
+          ngModel
+          required
+          #password="ngModel"
+        />
+        <mat-error *ngIf="password.invalid">Please enter password.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          type="text"
+          matInput
+          name="name"
+          ngModel
+          placeholder="Enter your name..."
+          required
+          #name="ngModel"
+        />
+        <mat-error *ngIf="name.invalid">Please enter your name.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Phone</mat-label>
+        <input
+          type="text"
+          matInput
+          ngModel
+          name="phone"
+          placeholder="Enter phone number..."
+          required
+          #phone="ngModel"
+        />
+        <mat-error *ngIf="phone.invalid"
+          >Please enter your phone number.</mat-error
+        >
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Skillsets</mat-label>
-    <mat-chip-list #chipList>
-      <mat-chip
-        *ngFor="let skillset of enteredSkillSets"
-        (removed)="removeSkills(skillset)"
-      >
-        {{ skillset.name }}
-        <button matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-      <input
-        placeholder="Enter your skillsets here"
-        [matChipInputFor]="chipList"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        [matChipInputAddOnBlur]="addOnBlur"
-        (matChipInputTokenEnd)="addSkills($event)"
-      />
-    </mat-chip-list>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Skillsets</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngFor="let skillset of enteredSkillSets"
+          (removed)="removeSkills(skillset)"
+        >
+          {{ skillset.name }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Enter your skillsets here"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addSkills($event)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Hobbies</mat-label>
-    <mat-chip-list #chipListHobbies>
-      <mat-chip
-        *ngFor="let hobbies of enteredHobbies"
-        (removed)="removeHobbies(hobbies)"
-      >
-        {{ hobbies.name }}
-        <button matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-      <input
-        placeholder="Enter your hobbies here"
-        [matChipInputFor]="chipListHobbies"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        [matChipInputAddOnBlur]="addOnBlur"
-        (matChipInputTokenEnd)="addHobbies($event)"
-      />
-    </mat-chip-list>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Hobbies</mat-label>
+      <mat-chip-list #chipListHobbies>
+        <mat-chip
+          *ngFor="let hobbies of enteredHobbies"
+          (removed)="removeHobbies(hobbies)"
+        >
+          {{ hobbies.name }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Enter your hobbies here"
+          [matChipInputFor]="chipListHobbies"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addHobbies($event)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
 
-  <div>
-    <button mat-raised-button color="primary" (click)="onRegisterHandler()">
-      Submit
-    </button>
-  </div>
+    <div>
+      <button type="submit" mat-raised-button color="primary">Submit</button>
+    </div>
+  </form>
 </mat-card>

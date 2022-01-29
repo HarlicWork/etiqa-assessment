@@ -1,7 +1,9 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 
+import { User } from '../../models/user.model';
 export interface Skillset {
   name: string;
 }
@@ -27,12 +29,16 @@ export class RegisterComponent {
   enteredHobbies: Hobbies[] = [{ name: 'Travel' }];
   @Output() userCreated = new EventEmitter();
 
-  onRegisterHandler() {
-    const userData = {
-      userName: this.enteredUserName,
-      email: this.enteredEmail,
-      password: this.enteredPassword,
-      phoneNumber: this.enteredPhone,
+  onRegisterHandler(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
+    const userData: User = {
+      email: form.value.email,
+      password: form.value.password,
+      userName: form.value.name,
+      phoneNumber: form.value.phone,
       skillsets: this.enteredSkillSets,
       hobbies: this.enteredHobbies,
     };

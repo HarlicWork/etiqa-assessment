@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { User } from './models/user.model';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +10,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'etiqa-assessment';
 
-  storedRegisteredUsers = [];
+  storedRegisteredUsers: User[] = [];
 
   onUserRegister(newUsers) {
     this.storedRegisteredUsers.push(newUsers);
