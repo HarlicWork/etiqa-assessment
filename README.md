@@ -25,13 +25,13 @@ on client, run
 
 Run 'ng serve' for a local server. Navigate to `http://localhost:4200/`.
 
-## Note: In root server folder, create .env file with below template:
+## Note: In server folder, you can modify the .env file to change your app DB_HOST & PORT:
 
 ```
 DB_HOST=mongodb://0.0.0.0:27017/etiqa-assessment
 PORT=3000
 ```
 
-The app is running with basic CRUD. However, im stuck in Edit user function due to Angular complex conditional state concept (React is easier to understand...lol).
+The app is running with basic CRUD. However, im stuck in Edit user function due to Angular complex state concept (React is easier to understand...lol).
 
 Enjoy!
