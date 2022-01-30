@@ -11,9 +11,15 @@ Navigate to both client & server folder and run each
 
 ### `npm install`
 
-then
+on server, run
 
 ### `npm start`
+
+on client, run
+
+### `ng serve`
+
+Run 'ng serve' for a local server. Navigate to `http://localhost:4200/`.
 
 ## Note: In root server folder, create .env file with below template:
 
