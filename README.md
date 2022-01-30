@@ -4,7 +4,7 @@ This is for Assessment Purpose:
 
 ## Pre-requisite
 
-Make sure you have Node & MongoDB installed on your machine.
+Make sure you have Node, Angular CLI & MongoDB installed on your machine.
 
 Clone or Download the repo from https://github.com/HarlicWork/etiqa-assessment.git. You will get below named folder:
 
