@@ -148,12 +148,22 @@ exports.users_login = async (req, res, next) => {
 
 exports.users_update = async (req, res, next) => {
   const { id } = req.params;
-  const { userName, email, phoneNumber, skillsets, hobbies } = req.body;
+  const { email, password, userName, phoneNumber, skillsets, hobbies } =
+    req.body;
 
   try {
     const user = await User.findByIdAndUpdate(
       { _id: id },
-      { $set: { userName, email, phoneNumber, skillsets, hobbies } },
+      {
+        $set: {
+          email: email,
+          password: password,
+          userName: userName,
+          phoneNumber: phoneNumber,
+          skillsets: skillsets,
+          hobbies: hobbies,
+        },
+      },
       { new: true }
     );
     res.status(200).json({ user });

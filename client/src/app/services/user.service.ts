@@ -32,8 +32,8 @@ export class UserService {
           });
         })
       )
-      .subscribe((userData) => {
-        this.users = userData;
+      .subscribe((transformedUsers) => {
+        this.users = transformedUsers;
         this.usersUpdated.next([...this.users]);
       });
   }
@@ -43,27 +43,38 @@ export class UserService {
   }
 
   getUser(id: string) {
-    return { ...this.users.find((u) => u.id === id) };
+    return this.http.get<{
+      _id: string;
+      email: string;
+      password: string;
+      userName: string;
+      phoneNumber: string;
+      skillsets: Skillset[];
+      hobbies: Hobbies[];
+    }>('http://localhost:3000/api/users/' + id);
   }
 
-  addUser(newUser: User) {
+  addUser(
+    email: string,
+    password: string,
+    userName: string,
+    phoneNumber: string,
+    skillsets: Skillset[],
+    hobbies: Hobbies[]
+  ) {
     const user: User = {
       id: null,
-      email: newUser.email,
-      password: newUser.password,
-      userName: newUser.userName,
-      phoneNumber: newUser.phoneNumber,
-      skillsets: newUser.skillsets,
-      hobbies: newUser.hobbies,
+      email: email,
+      password: password,
+      userName: userName,
+      phoneNumber: phoneNumber,
+      skillsets: skillsets,
+      hobbies: hobbies,
     };
     this.http
-      .post<{ userId: string; users: User[] }>(
-        'http://localhost:3000/api/users/signup',
-        user
-      )
+      .post<{ userId: string }>('http://localhost:3000/api/users/signup', user)
       .subscribe((result) => {
         const id = result.userId;
-        // set user id when create
         user.id = id;
         this.users.push(user);
         this.usersUpdated.next([...this.users]);
@@ -73,18 +84,18 @@ export class UserService {
 
   updateUser(
     id: string,
-    userName: string,
     email: string,
     password: string,
+    userName: string,
     phoneNumber: string,
     skillsets: Skillset[],
     hobbies: Hobbies[]
   ) {
     const user: User = {
       id: id,
-      userName: userName,
       email: email,
       password: password,
+      userName: userName,
       phoneNumber: phoneNumber,
       skillsets: skillsets,
       hobbies: hobbies,
@@ -95,6 +106,7 @@ export class UserService {
         const updateUsers = [...this.users];
         const oldUserIndex = updateUsers.findIndex((u) => u.id === user.id);
         updateUsers[oldUserIndex] = user;
+        this.users = updateUsers;
         this.usersUpdated.next([...this.users]);
         this.router.navigate(['/']);
       });

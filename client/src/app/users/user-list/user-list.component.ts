@@ -13,24 +13,24 @@ export class UserListComponent implements OnInit, OnDestroy {
   isLoading = false;
   private usersSub: Subscription;
 
-  constructor(public userService: UserService) {}
-
-  onDelete(userId: string) {
-    this.userService.deleteUser(userId);
-  }
-
   ngOnInit() {
     this.isLoading = true;
     this.userService.getUsers();
     this.usersSub = this.userService
       .getUserUpdateListener()
-      .subscribe((usr: User[]) => {
+      .subscribe((users: User[]) => {
         this.isLoading = false;
-        this.users = usr;
+        this.users = users;
       });
+  }
+
+  onDelete(userId: string) {
+    this.userService.deleteUser(userId);
   }
 
   ngOnDestroy() {
     this.usersSub.unsubscribe();
   }
+
+  constructor(public userService: UserService) {}
 }

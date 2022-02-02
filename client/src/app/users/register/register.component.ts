@@ -39,11 +39,22 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('userId')) {
-        this.mode = 'edit';
+        this.mode = 'update';
         this.userId = paramMap.get('userId');
         this.isLoading = true;
-        this.user = this.userService.getUser(this.userId);
-        this.isLoading = false;
+        this.userService.getUser(this.userId).subscribe((userData) => {
+          console.log(userData);
+          this.isLoading = false;
+          this.user = {
+            id: userData._id,
+            email: userData.email,
+            password: userData.password,
+            userName: userData.userName,
+            phoneNumber: userData.phoneNumber,
+            skillsets: userData.skillsets,
+            hobbies: userData.hobbies,
+          };
+        });
       } else {
         this.mode = 'register';
         this.userId = null;
@@ -67,7 +78,14 @@ export class RegisterComponent implements OnInit {
     };
 
     if (this.mode === 'register') {
-      this.userService.addUser(userData);
+      this.userService.addUser(
+        form.value.email,
+        form.value.password,
+        form.value.name,
+        form.value.phone,
+        this.enteredSkillSets,
+        this.enteredHobbies
+      );
     } else {
       this.userService.updateUser(
         this.userId,
