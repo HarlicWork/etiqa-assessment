@@ -32,6 +32,6 @@ DB_HOST=mongodb://0.0.0.0:27017/etiqa-assessment
 PORT=3000
 ```
 
-The app is running with basic CRUD. However, im stuck in Edit user function due to Angular complex state concept (React is easier to understand and done...lol).
+The app is running with basic CRUD. However, im stuck in return Skillset & Hobbies in Edit list.
 
 Enjoy!
