@@ -57,12 +57,12 @@ export class UserService {
       hobbies: newUser.hobbies,
     };
     this.http
-      .post<{ postId: string; users: User[] }>(
+      .post<{ userId: string; users: User[] }>(
         'http://localhost:3000/api/users/signup',
         user
       )
       .subscribe((result) => {
-        const id = result.postId;
+        const id = result.userId;
         // set user id when create
         user.id = id;
         this.users.push(user);
