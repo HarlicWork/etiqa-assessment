@@ -47,9 +47,9 @@ export class RegisterComponent implements OnInit {
           this.isLoading = false;
           this.user = {
             id: userData._id,
+            userName: userData.userName,
             email: userData.email,
             password: userData.password,
-            userName: userData.userName,
             phoneNumber: userData.phoneNumber,
             skillsets: userData.skillsets,
             hobbies: userData.hobbies,
