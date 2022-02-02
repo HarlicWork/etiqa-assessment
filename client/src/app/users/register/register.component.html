@@ -83,6 +83,9 @@
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="addOnBlur"
           (matChipInputTokenEnd)="addSkills($event)"
+          [ngModel]="user?.skillsets"
+          #skillsets="ngModel"
+          name="skillset"
         />
       </mat-chip-list>
     </mat-form-field>
