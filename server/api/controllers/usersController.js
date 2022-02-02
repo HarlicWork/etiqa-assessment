@@ -59,14 +59,8 @@ exports.user_get_all = async (req, res, next) => {
 exports.user_get_by_id = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const users = await User.findById(id).sort({ userName: 1 }).select({
-      userName: 1,
-      email: 1,
-      phoneNumber: 1,
-      skillsets: 1,
-      hobby: 1,
-    });
-    res.status(200).json({ users });
+    const users = await User.findById(id).sort({ userName: 1 });
+    res.status(200).json(users);
   } catch (err) {
     return res.status(500).json({
       error: err,
