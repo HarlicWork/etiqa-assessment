@@ -1,6 +1,7 @@
-# etiqa-assessment
+# Complete Developer Network
 
-## AWS Deployment Link: 
+## AWS Deployment Link:
+
 ```
 http://etiqa-app.s3-website-ap-southeast-1.amazonaws.com/
 ```
