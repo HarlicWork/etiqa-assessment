@@ -16,7 +16,9 @@ export class UserService {
 
   getUsers() {
     this.http
-      .get<{ users: any }>('http://localhost:3000/api/users')
+      .get<{ users: any }>(
+        'http://etiqaapp-env.eba-aspdpuvq.ap-southeast-1.elasticbeanstalk.com/api/users'
+      )
       .pipe(
         map((userData) => {
           return userData.users.map((user) => {
@@ -51,7 +53,10 @@ export class UserService {
       phoneNumber: string;
       skillsets: Skillset[];
       hobbies: Hobbies[];
-    }>('http://localhost:3000/api/users/' + id);
+    }>(
+      'http://etiqaapp-env.eba-aspdpuvq.ap-southeast-1.elasticbeanstalk.com/api/users/' +
+        id
+    );
   }
 
   addUser(
@@ -72,7 +77,10 @@ export class UserService {
       hobbies: hobbies,
     };
     this.http
-      .post<{ userId: string }>('http://localhost:3000/api/users/signup', user)
+      .post<{ userId: string }>(
+        'http://etiqaapp-env.eba-aspdpuvq.ap-southeast-1.elasticbeanstalk.com/api/users/signup',
+        user
+      )
       .subscribe((result) => {
         const id = result.userId;
         user.id = id;
@@ -101,7 +109,11 @@ export class UserService {
       hobbies: hobbies,
     };
     this.http
-      .put('http://localhost:3000/api/users/update/' + id, user)
+      .put(
+        'http://etiqaapp-env.eba-aspdpuvq.ap-southeast-1.elasticbeanstalk.com/api/users/update/' +
+          id,
+        user
+      )
       .subscribe((response) => {
         const updateUsers = [...this.users];
         const oldUserIndex = updateUsers.findIndex((u) => u.id === user.id);
@@ -114,7 +126,10 @@ export class UserService {
 
   deleteUser(userId: string) {
     this.http
-      .delete('http://localhost:3000/api/users/' + userId)
+      .delete(
+        'http://etiqaapp-env.eba-aspdpuvq.ap-southeast-1.elasticbeanstalk.com/api/users/' +
+          userId
+      )
       .subscribe(() => {
         const updateUserList = this.users.filter((user) => user.id !== userId);
         this.users = updateUserList;

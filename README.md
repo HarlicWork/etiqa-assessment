@@ -1,8 +1,10 @@
 # etiqa-assessment
 
+## AWS Deployment Link: http://etiqa-app.s3-website-ap-southeast-1.amazonaws.com/
+
 This is for Assessment Purpose:
 
-## Pre-requisite
+## Pre-requisite for local deployment
 
 Make sure you have Node, Angular CLI & MongoDB installed on your machine.
 
