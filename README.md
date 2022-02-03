@@ -1,6 +1,9 @@
 # etiqa-assessment
 
-## AWS Deployment Link: http://etiqa-app.s3-website-ap-southeast-1.amazonaws.com/
+## AWS Deployment Link: 
+```
+http://etiqa-app.s3-website-ap-southeast-1.amazonaws.com/
+```
 
 This is for Assessment Purpose:
 
